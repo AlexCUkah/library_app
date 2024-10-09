@@ -34,6 +34,7 @@ function uiBook() {
             .then(response => response.json())
             .then(data => {
                 console.log('Book added to server:', data);
+                book.id = data.data.id;
                 storedBooks.push(book);
 
                 // Display the new book on the UI
@@ -43,6 +44,24 @@ function uiBook() {
     } else {
         alert("Please enter valid information");
     }
+}
+
+
+function deleteBookFromServer(bookId, bookElement) {
+    fetch(`/books/${bookId}`, {
+        method: 'DELETE',
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to delete book');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data.message);
+            bookElement.remove(); // Remove the book element from the UI
+        })
+        .catch(error => console.error('Error deleting book:', error));
 }
 
 // Function to display a single book on the UI
@@ -56,11 +75,19 @@ function displayBook(book) {
     authorB.textContent = `Author: ${book.author}`;
     let pageB = document.createElement('div');
     pageB.textContent = `Pages: ${book.pages}`;
+    let deleteBook = document.createElement("button");
+    deleteBook.className = "delete";
+    deleteBook.textContent = "Delete Book"
+
+    deleteBook.addEventListener('click', () => {
+        deleteBookFromServer(book.id, newDiv)
+    });
 
     bookDisplay.appendChild(newDiv);
     newDiv.appendChild(nameB);
     newDiv.appendChild(authorB);
     newDiv.appendChild(pageB);
+    newDiv.appendChild(deleteBook);
 }
 
 // Function to fetch and display books from the server

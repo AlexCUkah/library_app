@@ -67,7 +67,12 @@ label, button {
     display: block;
 }
 
-button {
+#add {
     margin-top: 10%;
     margin-left: 25%;
+}
+
+.delete {
+    height: 25%;
+    width: 25%;
 }
