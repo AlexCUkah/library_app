@@ -1,5 +1,5 @@
-let mainPage = document.querySelector('.main-content')
-
+let mainPage = document.getElementsByClassName('.left-content')
+let addBookButton =document.getElementsByClassName('.add')
 let storedBooks = []
 
 function Book(name, author, pages,) {
@@ -9,9 +9,3 @@ function Book(name, author, pages,) {
 
 
 }
-
-function addBookToStore(name, author, pages,) {
-    const Book = new Book(name, author, pages)
-    storedBooks.push(Book)
-}
-
